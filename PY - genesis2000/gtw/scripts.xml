@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    gtw 脚本配置文件（脚本列表已从代码中抽出）
+    ============================================================
+    增删脚本只需修改本文件，无需改动代码：
+
+    1. 将 exe 放入 src 文件夹
+    2. 在对应 <group> 内添加一行 <script>，例如：
+         <script name="MY_SCRIPT" exe="my_script.exe" label="我的脚本"/>
+       - name  : 唯一ID（英文，可选，供代码按名引用，如 AUTO_MI）
+       - exe   : src 下的 exe 文件名（必填）
+       - label : “脚本”树中显示的文字（可选，默认取 exe 文件名）
+    3. 重启程序即可，脚本会出现在对应分组下，双击运行
+
+    group 的 name 对应 gtw 脚本内菜单分组名
+-->
+<scripts>
+    <group name="原稿处理"/>
+    <group name="单稿孔处理"/>
+    <group name="单稿线路"/>
+    <group name="单稿覆盖膜"/>
+    <group name="单稿阻焊"/>
+    <group name="单稿文字"/>
+    <group name="图纸">
+        <script name="AUTO_MI" exe="AUTO_MI.exe" label="输出MI图纸"/>
+    </group>
+    <group name="SET"/>
+    <group name="panel"/>
+    <group name="输出"/>
+    <group name="其他">
+        <script exe="Hot-Key.exe" label="Hot-Key"/>
+    </group>
+</scripts>

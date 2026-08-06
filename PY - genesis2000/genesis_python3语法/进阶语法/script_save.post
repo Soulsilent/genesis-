@@ -1,0 +1,57 @@
+#!python3
+import sys,re
+from tkinter import *
+import tkinter.messagebox as messagebox
+def set_mess(info='?'):
+    root = Tk()
+    root.withdraw() #隐藏父窗口
+    root.wm_attributes('-topmost',1) #窗口置顶    
+    messagebox.showinfo("泉哥提示",info)
+	
+try:
+    
+    f1 = open(sys.argv[1:2][0])
+    f1.readline()#跳过第一行
+    file_in = re.match(r'.*?\'(.*?)\'',f1.readline()).group(1) #使用正则表达式,截取文件路径
+    #set_mess(file_in.group(1)) #文件路径
+    f1.close()
+   
+except:
+    set_mess('转换错误!')
+    exit (0)
+
+
+file_out = file_in+r'.py' #输出文件路径
+f_in = open(file_in,"r")
+f_out = open(file_out,'w')
+#f_out.write('追加{}内容\n'.format(x))
+f_out.write(r'#!python3'+'\n')
+f_out.write(r'import Genesis'+'\n')
+f_out.write(r'g = Genesis.Genesis()'+'\n\n\n')
+
+
+'''
+开头COM,AUX
+结尾\或者其他
+'''
+for x in f_in:
+    aa = re.match(r'((?:COM)|(?:AUX))\s+(.*?)(\\)?$',x)
+    if aa:
+        if not aa.group(3):  #如果最后一个不是\号,说明语句完毕
+            #f_out.write('g.{}(\'{}\')\n'.format(aa.group(1),aa.group(2)))
+            #完整命令
+            f_out.write('g.{}(\'{}\')\n'.format(aa.group(1),aa.group(2))) 
+        else:
+            #只有开头的命令
+            f_out.write('g.{}(\'{}\'\n'.format(aa.group(1),aa.group(2)))
+    else:
+        #尚未完结
+        if '\\' in x:  #结尾有\号说明没完结
+            f_out.write('      \'{}\'\n'.format(x.strip()[:-1])) #结尾的\不要
+        else:  #否则说明完结了
+            f_out.write('      \'{}\')\n'.format(x.strip()))
+            
+f_in.close()
+f_out.close()
+
+set_mess('转换ok!')
